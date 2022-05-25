@@ -22,7 +22,7 @@ class ObjectHydrator
     /**
      * @var array<class-string<I>, I>
      */
-    private $instances;
+    private $casterInstances;
 
     public function __construct(
         ?DefinitionProvider $definitionProvider = null,
@@ -74,7 +74,7 @@ class ObjectHydrator
                 foreach ($definition->propertyCasters as $index => [$caster, $options]) {
                     $key = "$className-$index-$caster";
                     /** @var PropertyCaster $propertyCaster */
-                    $propertyCaster = $this->instances[$key] ??= new $caster(...$options);
+                    $propertyCaster = $this->casterInstances[$key] ??= new $caster(...$options);
                     $value = $propertyCaster->cast($value, $this);
                 }
 
